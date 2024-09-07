@@ -6,7 +6,7 @@ from indeed_core.models import JobModel
 from indeed_core.exceptions import JobParseError, ValidationError
 import pydantic
 import datetime as dt
-
+from io import StringIO
 
 class Indeed:
     def __init__(self, base_url, proxy: str | None = None) -> None:
@@ -111,7 +111,7 @@ class Indeed:
 
             snippet = job_card.get("snippet")
             if snippet:
-                soup = BeautifulSoup(snippet, features="lxml")
+                soup = BeautifulSoup(StringIO(snippet), features="lxml")
                 card['job_description'] = soup.text.strip()
 
             cards.append(card)
