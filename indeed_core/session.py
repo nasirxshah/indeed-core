@@ -26,8 +26,9 @@ class Session(requests.Session):
         )
 
         if proxy:
-            self.proxies.update({"http": proxy, "https": proxy})
-
+            self.proxy = proxy
+            self.verify = False
+    
     @retry(wait=wait_random(min=1, max=2), stop=stop_after_attempt(3))
     def request(
         self,
